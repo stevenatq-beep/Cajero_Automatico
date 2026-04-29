@@ -16,6 +16,26 @@ void mostrarMenu(void) {
     printf("4. Salir\n");
 }
 
+void consultarSaldo(User *user) {
+    printf("Saldo actual de %s: $%.2f\n", user->username, user->balance);
+}
+
+void depositarDinero(User *user) {
+    double monto;
+
+    printf("Ingrese el monto a depositar: ");
+    scanf("%lf", &monto);
+
+    if (monto <= 0) {
+        printf("Monto invalido.\n");
+        return;
+    }
+
+    user->balance += monto;
+    printf("Deposito realizado con exito.\n");
+    printf("Nuevo saldo: $%.2f\n", user->balance);
+}
+
 int main(void) {
     User users[3] = {
         {"steven", "1234", 1500.00},
@@ -27,7 +47,8 @@ int main(void) {
     char password[20];
     int acceso = 0;
     int intentos = 0;
-    int opcion;
+    int opcion = 0;
+    int userIndex = -1;
 
     while (intentos < MAX_ATTEMPTS && !acceso) {
         printf("Usuario: ");
@@ -40,6 +61,7 @@ int main(void) {
             if (strcmp(username, users[i].username) == 0 &&
                 strcmp(password, users[i].password) == 0) {
                 acceso = 1;
+                userIndex = i;
             }
         }
 
@@ -58,6 +80,12 @@ int main(void) {
         mostrarMenu();
         printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
+
+        if (opcion == 1) {
+            consultarSaldo(&users[userIndex]);
+        } else if (opcion == 2) {
+            depositarDinero(&users[userIndex]);
+        }
 
     } while (opcion != 4);
 
