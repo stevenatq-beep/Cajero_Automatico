@@ -9,6 +9,13 @@ typedef struct {
     double balance;
 } User;
 
+void mostrarMenu(void) {
+    printf("\n1. Consultar saldo\n");
+    printf("2. Depositar dinero\n");
+    printf("3. Retirar dinero\n");
+    printf("4. Salir\n");
+}
+
 int main(void) {
     User users[3] = {
         {"steven", "1234", 1500.00},
@@ -20,6 +27,7 @@ int main(void) {
     char password[20];
     int acceso = 0;
     int intentos = 0;
+    int opcion;
 
     while (intentos < MAX_ATTEMPTS && !acceso) {
         printf("Usuario: ");
@@ -41,11 +49,17 @@ int main(void) {
         }
     }
 
-    if (acceso) {
-        printf("Acceso permitido.\n");
-    } else {
+    if (!acceso) {
         printf("Demasiados intentos fallidos.\n");
+        return 0;
     }
+
+    do {
+        mostrarMenu();
+        printf("Seleccione una opcion: ");
+        scanf("%d", &opcion);
+
+    } while (opcion != 4);
 
     return 0;
 }
