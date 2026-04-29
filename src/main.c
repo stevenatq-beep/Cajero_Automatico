@@ -20,6 +20,22 @@ void consultarSaldo(User *user) {
     printf("Saldo actual de %s: $%.2f\n", user->username, user->balance);
 }
 
+void depositarDinero(User *user) {
+    double monto;
+
+    printf("Ingrese el monto a depositar: ");
+    scanf("%lf", &monto);
+
+    if (monto <= 0) {
+        printf("Monto invalido.\n");
+        return;
+    }
+
+    user->balance += monto;
+    printf("Deposito realizado con exito.\n");
+    printf("Nuevo saldo: $%.2f\n", user->balance);
+}
+
 int main(void) {
     User users[3] = {
         {"steven", "1234", 1500.00},
@@ -67,6 +83,8 @@ int main(void) {
 
         if (opcion == 1) {
             consultarSaldo(&users[userIndex]);
+        } else if (opcion == 2) {
+            depositarDinero(&users[userIndex]);
         }
 
     } while (opcion != 4);
