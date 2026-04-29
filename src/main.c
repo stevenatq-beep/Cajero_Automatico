@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define MAX_ATTEMPTS 3
+
 typedef struct {
     char username[20];
     char password[20];
@@ -17,24 +19,32 @@ int main(void) {
     char username[20];
     char password[20];
     int acceso = 0;
+    int intentos = 0;
 
-    printf("Usuario: ");
-    scanf("%19s", username);
+    while (intentos < MAX_ATTEMPTS && !acceso) {
+        printf("Usuario: ");
+        scanf("%19s", username);
 
-    printf("Contrasena: ");
-    scanf("%19s", password);
+        printf("Contrasena: ");
+        scanf("%19s", password);
 
-    for (int i = 0; i < 3; i++) {
-        if (strcmp(username, users[i].username) == 0 &&
-            strcmp(password, users[i].password) == 0) {
-            acceso = 1;
+        for (int i = 0; i < 3; i++) {
+            if (strcmp(username, users[i].username) == 0 &&
+                strcmp(password, users[i].password) == 0) {
+                acceso = 1;
+            }
+        }
+
+        if (!acceso) {
+            intentos++;
+            printf("Credenciales incorrectas. Intento %d de %d.\n", intentos, MAX_ATTEMPTS);
         }
     }
 
     if (acceso) {
         printf("Acceso permitido.\n");
     } else {
-        printf("Acceso denegado.\n");
+        printf("Demasiados intentos fallidos.\n");
     }
 
     return 0;
