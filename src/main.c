@@ -36,6 +36,28 @@ void depositarDinero(User *user) {
     printf("Nuevo saldo: $%.2f\n", user->balance);
 }
 
+void retirarDinero(User *user) {
+    double monto;
+
+    printf("Ingrese el monto a retirar: ");
+    scanf("%lf", &monto);
+
+    if (monto <= 0) {
+        printf("Monto invalido.\n");
+        return;
+    }
+
+    if (monto > user->balance) {
+        printf("Fondos insuficientes.\n");
+        printf("Saldo disponible: $%.2f\n", user->balance);
+        return;
+    }
+
+    user->balance -= monto;
+    printf("Retiro realizado con exito.\n");
+    printf("Nuevo saldo: $%.2f\n", user->balance);
+}
+
 int main(void) {
     User users[3] = {
         {"steven", "1234", 1500.00},
@@ -85,6 +107,8 @@ int main(void) {
             consultarSaldo(&users[userIndex]);
         } else if (opcion == 2) {
             depositarDinero(&users[userIndex]);
+        } else if (opcion == 3) {
+            retirarDinero(&users[userIndex]);
         }
 
     } while (opcion != 4);
